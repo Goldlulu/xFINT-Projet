@@ -60,7 +60,38 @@ npm install && npm run build
 cp .env.example .env
 php artisan key:generate
 
-# Base de données (ajuster selon votre config)
+```
+
+# Base de données (MySQL) Prérequis : MySQL d'installé
+## Étapes détaillées :
+
+### 1. Se connecter à MySQL
+```bash
+# Via ligne de commande
+mysql -u root -p
+
+# Ou via phpMyAdmin (WAMP/XAMPP)
+# Aller sur http://localhost/phpmyadmin
+```
+
+### 2. Créer la base de données
+```sql
+CREATE DATABASE gestion_notes_frais CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+### 3. Configurer le .env
+Ajustez les paramètres selon votre environnement local :
+
+```env
+DB_HOST=127.0.0.1          # Ou localhost
+DB_PORT=3306               # Port MySQL (3306 par défaut)
+DB_DATABASE=gestion_notes_frais
+DB_USERNAME=root           # Votre utilisateur MySQL
+DB_PASSWORD=               # Votre mot de passe MySQL (souvent vide en local)
+```
+
+```
+
 # Créer une base 'gestion_notes_frais' dans MySQL
 php artisan migrate
 php artisan db:seed --class=RoleSeeder
