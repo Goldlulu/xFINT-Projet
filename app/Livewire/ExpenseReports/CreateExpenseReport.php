@@ -5,22 +5,49 @@ namespace App\Livewire\ExpenseReports;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\ExpenseReport;
+
 class CreateExpenseReport extends Component
 {
     use WithFileUploads;
+
     public $title;
     public $comment;
     public $documents = [];
+    public $newDocuments = []; // Pour les nouveaux fichiers
 
     protected $rules = [
         'title' => 'required|string|max:255',
         'comment' => 'nullable|string',
-        'documents.*' => 'file|max:10240|mimes:pdf,jpg,jpeg,png'
+        'newDocuments.*' => 'file|max:10240|mimes:pdf,jpg,jpeg,png'
     ];
+
+    public function updatedNewDocuments()
+    {
+        // Ajouter les nouveaux fichiers au tableau existant
+        foreach ($this->newDocuments as $newDoc) {
+            $this->documents[] = $newDoc;
+        }
+
+        // Réinitialiser le champ d'upload
+        $this->newDocuments = [];
+    }
+
+    public function removeDocument($index)
+    {
+        unset($this->documents[$index]);
+        $this->documents = array_values($this->documents);
+    }
 
     public function save()
     {
-        $this->validate();
+        $this->validate([
+            'title' => 'required|string|max:255',
+            'comment' => 'nullable|string',
+            'documents' => 'required|min:1', // Au moins un document requis
+        ], [
+            'documents.required' => 'Vous devez joindre au moins une pièce justificative.',
+            'documents.min' => 'Vous devez joindre au moins une pièce justificative.',
+        ]);
 
         $report = auth()->user()->expenseReports()->create([
             'title' => $this->title,

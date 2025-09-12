@@ -36,12 +36,9 @@ Route::middleware([
         return redirect('/my-expense-reports');
     })->name('dashboard');
 
-    // Routes communes (accessibles à tous les utilisateurs connectés)
     Route::get('/my-expense-reports', MyExpenseReports::class)->name('my-expense-reports');
     Route::get('/create-expense-report', CreateExpenseReport::class)->name('create-expense-report');
     Route::get('/user-profile', UserProfile::class)->name('user-profile');
-
-    // Route pour télécharger les documents
     Route::get('/download-document/{document}', function(ExpenseDocument $document) {
         $expenseReport = $document->expenseReport;
 
@@ -50,7 +47,6 @@ Route::middleware([
             abort(403, 'Non autorisé');
         }
 
-        // Vérifier si le fichier existe dans le storage
         if (!Storage::exists($document->filename)) {
             abort(404, 'Fichier non trouvé');
         }
