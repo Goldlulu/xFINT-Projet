@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+    app:
+        image: php:8.2-cli
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/app
+        working_dir: /app
+        command: >
+            bash -c "
+            apt-get update -qq &&
+            apt-get install -y -qq libpng-dev libonig-dev libxml2-dev libzip-dev zip unzip git curl &&
+            docker-php-ext-install pdo_mysql mbstring zip &&
+            curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
+            composer install --no-dev --optimize-autoloader &&
+            echo 'Waiting for MySQL...' &&
+            sleep 15 &&
+            echo 'DB_HOST=mysql' > .env &&
+            echo 'DB_PORT=3306' >> .env &&
+            echo 'DB_DATABASE=gestion_notes_frais' >> .env &&
+            echo 'DB_USERNAME=root' >> .env &&
+            echo 'DB_PASSWORD=rootpassword' >> .env &&
+            echo 'APP_KEY=base64:59jXAaw+EgcX1lS7gPNv7+9Wvq2DiGaOjI4uiKdsZyU=' >> .env &&
+            echo 'APP_ENV=local' >> .env &&
+            echo 'APP_DEBUG=true' >> .env &&
+            echo 'SESSION_DRIVER=database' >> .env &&
+            echo 'CACHE_STORE=database' >> .env &&
+            php artisan migrate --force &&
+            php artisan db:seed --class=RoleSeeder --force &&
+            php artisan db:seed --class=UserSeeder --force &&
+            php artisan serve --host=0.0.0.0 --port=8000
+            "
+        depends_on:
+            - mysql
+
+    mysql:
+        image: mysql:8.0
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: gestion_notes_frais
+        volumes:
+            - mysql_data:/var/lib/mysql
+        ports:
+            - "3307:3306"
+
+volumes:
+    mysql_data:
