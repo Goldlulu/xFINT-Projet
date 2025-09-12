@@ -50,6 +50,6 @@ class ChangePassword extends Component
     public function render()
     {
         return view('livewire.auth.change-password')
-            ->layout('layouts.guest'); // Layout pour les pages d'authentification
+            ->layout('layouts.guest');
     }
 }

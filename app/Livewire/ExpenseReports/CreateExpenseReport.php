@@ -48,12 +48,6 @@ class CreateExpenseReport extends Component
         $this->validate([
             'title' => 'required|string|max:75',
             'comment' => 'nullable|string|max:200',
-            // Supprimez ces lignes :
-            // 'documents' => 'required|min:1',
-        ], [
-            // Supprimez ces lignes :
-            // 'documents.required' => 'Vous devez joindre au moins une pièce justificative.',
-            // 'documents.min' => 'Vous devez joindre au moins une pièce justificative.',
         ]);
 
         $report = auth()->user()->expenseReports()->create([
@@ -61,7 +55,6 @@ class CreateExpenseReport extends Component
             'comment' => $this->comment,
         ]);
 
-        // Sauvegarder les documents seulement s'il y en a
         if (count($this->documents) > 0) {
             foreach ($this->documents as $document) {
                 $filename = $document->store('expense-documents');

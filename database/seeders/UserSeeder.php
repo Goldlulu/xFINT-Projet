@@ -19,17 +19,8 @@ class UserSeeder extends Seeder
             'email' => 'manager@supherman.com',
             'password' => Hash::make('Suph3rm4n!'),
             'email_verified_at' => now(),
-            'must_change_password' => false, // Pas besoin de changer le mot de passe
         ]);
         $manager->assignRole('manager');
 
-        // Créer un employé de test
-        $employee = User::create([
-            'name' => 'Employee Test',
-            'email' => 'employee@test.com',
-            'password' => Hash::make('password'),
-            'email_verified_at' => now(),
-        ]);
-        $employee->assignRole('employee');
     }
 }
