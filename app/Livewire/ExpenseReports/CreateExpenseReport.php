@@ -16,9 +16,14 @@ class CreateExpenseReport extends Component
     public $newDocuments = []; // Pour les nouveaux fichiers
 
     protected $rules = [
-        'title' => 'required|string|max:255',
-        'comment' => 'nullable|string',
+        'title' => 'required|string|max:75',
+        'comment' => 'nullable|string|max:200',
         'newDocuments.*' => 'file|max:10240|mimes:pdf,jpg,jpeg,png'
+    ];
+
+    protected $messages = [
+        'title.max' => 'Le titre ne peut pas dépasser 75 caractères.',
+        'comment.max' => 'Le commentaire ne peut pas dépasser 200 caractères.',
     ];
 
     public function updatedNewDocuments()

@@ -13,11 +13,12 @@
                         <!-- Titre -->
                         <div>
                             <label for="title" class="block text-sm font-medium text-gray-700">
-                                Titre de la note de frais *
+                                Titre de la note de frais * <span class="text-xs text-gray-500">({{ strlen($title ?? '') }}/75)</span>
                             </label>
                             <input type="text"
                                    id="title"
                                    wire:model="title"
+                                   maxlength="75"
                                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                    placeholder="Ex: Frais de déplacement client X">
                             @error('title')
@@ -28,11 +29,12 @@
                         <!-- Commentaire -->
                         <div>
                             <label for="comment" class="block text-sm font-medium text-gray-700">
-                                Commentaire
+                                Commentaire <span class="text-xs text-gray-500">({{ strlen($comment ?? '') }}/200)</span>
                             </label>
                             <textarea id="comment"
                                       wire:model="comment"
                                       rows="4"
+                                      maxlength="200"
                                       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                       placeholder="Détails sur les frais engagés..."></textarea>
                             @error('comment')

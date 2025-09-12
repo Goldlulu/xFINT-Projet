@@ -17,8 +17,12 @@ class CreateUser extends Component
     public $temporaryPassword = null;
 
     protected $rules = [
-        'email' => 'required|email|unique:users',
+        'email' => 'required|email|unique:users|max:50',
         'role' => 'required|in:employee,manager,accounting'
+    ];
+
+    protected $messages = [
+        'email.max' => 'L\'adresse email ne peut pas dépasser 50 caractères.',
     ];
 
     public function createUser()

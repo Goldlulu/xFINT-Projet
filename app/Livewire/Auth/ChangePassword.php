@@ -13,7 +13,7 @@ class ChangePassword extends Component
 
     protected $rules = [
         'current_password' => 'required',
-        'new_password' => 'required|min:8|confirmed',
+        'new_password' => 'required|min:8|max:30|confirmed',
         'new_password_confirmation' => 'required',
     ];
 
@@ -21,6 +21,7 @@ class ChangePassword extends Component
         'current_password.required' => 'Le mot de passe actuel est requis.',
         'new_password.required' => 'Le nouveau mot de passe est requis.',
         'new_password.min' => 'Le nouveau mot de passe doit contenir au moins 8 caractères.',
+        'new_password.max' => 'Le nouveau mot de passe ne peut pas dépasser 30 caractères.',
         'new_password.confirmed' => 'La confirmation du mot de passe ne correspond pas.',
     ];
 

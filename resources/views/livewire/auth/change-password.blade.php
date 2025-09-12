@@ -32,13 +32,14 @@
             <!-- Nouveau mot de passe -->
             <div class="mb-4">
                 <label for="new_password" class="block text-sm font-medium text-gray-700">
-                    Nouveau mot de passe *
+                    Nouveau mot de passe * <span class="text-xs text-gray-500">({{ strlen($new_password ?? '') }}/30)</span>
                 </label>
                 <input type="password"
                        id="new_password"
                        wire:model="new_password"
+                       maxlength="30"
                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                       placeholder="Au moins 8 caractères">
+                       placeholder="8 à 30 caractères">
                 @error('new_password')
                 <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                 @enderror
@@ -52,6 +53,7 @@
                 <input type="password"
                        id="new_password_confirmation"
                        wire:model="new_password_confirmation"
+                       maxlength="30"
                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                        placeholder="Retapez votre nouveau mot de passe">
                 @error('new_password_confirmation')
