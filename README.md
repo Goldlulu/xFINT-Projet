@@ -15,8 +15,6 @@ Application interne de gestion des notes de frais développée avec Laravel, Liv
 ## Comptes de test
 
 - **Manager** : `manager@supherman.com` / `Suph3rm4n!`
-- **Employé** : `employee@test.com` / `password`
-- **Comptabilité** : `accounting@test.com` / `password`
 
 ---
 
