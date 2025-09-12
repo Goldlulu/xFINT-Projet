@@ -45,7 +45,7 @@
                         <!-- Upload de fichiers -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700">
-                                Pièces justificatives *
+                                Pièces justificatives
                             </label>
                             <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                 <div class="space-y-1 text-center">
@@ -69,9 +69,7 @@
                                     </p>
                                 </div>
                             </div>
-                            @error('documents')
-                            <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
-                            @enderror
+                            <!-- Supprimez la validation d'erreur pour documents requis -->
                             @error('newDocuments.*')
                             <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                             @enderror

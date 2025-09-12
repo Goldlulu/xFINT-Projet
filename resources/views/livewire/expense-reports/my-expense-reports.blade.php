@@ -138,6 +138,11 @@
                                                     @endforeach
                                                 </ul>
                                             </div>
+                                        @else
+                                            <div>
+                                                <strong class="text-sm text-gray-600">Pièces justificatives:</strong>
+                                                <p class="text-sm text-gray-500 mt-1">Aucune pièce justificative jointe</p>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>

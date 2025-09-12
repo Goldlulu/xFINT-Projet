@@ -46,12 +46,14 @@ class CreateExpenseReport extends Component
     public function save()
     {
         $this->validate([
-            'title' => 'required|string|max:255',
-            'comment' => 'nullable|string',
-            'documents' => 'required|min:1', // Au moins un document requis
+            'title' => 'required|string|max:75',
+            'comment' => 'nullable|string|max:200',
+            // Supprimez ces lignes :
+            // 'documents' => 'required|min:1',
         ], [
-            'documents.required' => 'Vous devez joindre au moins une pièce justificative.',
-            'documents.min' => 'Vous devez joindre au moins une pièce justificative.',
+            // Supprimez ces lignes :
+            // 'documents.required' => 'Vous devez joindre au moins une pièce justificative.',
+            // 'documents.min' => 'Vous devez joindre au moins une pièce justificative.',
         ]);
 
         $report = auth()->user()->expenseReports()->create([
@@ -59,15 +61,18 @@ class CreateExpenseReport extends Component
             'comment' => $this->comment,
         ]);
 
-        foreach ($this->documents as $document) {
-            $filename = $document->store('expense-documents');
+        // Sauvegarder les documents seulement s'il y en a
+        if (count($this->documents) > 0) {
+            foreach ($this->documents as $document) {
+                $filename = $document->store('expense-documents');
 
-            $report->documents()->create([
-                'filename' => $filename,
-                'original_name' => $document->getClientOriginalName(),
-                'mime_type' => $document->getMimeType(),
-                'size' => $document->getSize(),
-            ]);
+                $report->documents()->create([
+                    'filename' => $filename,
+                    'original_name' => $document->getClientOriginalName(),
+                    'mime_type' => $document->getMimeType(),
+                    'size' => $document->getSize(),
+                ]);
+            }
         }
 
         session()->flash('message', 'Note de frais créée avec succès!');
