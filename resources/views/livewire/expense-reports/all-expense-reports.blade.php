@@ -158,11 +158,18 @@
                                                 <strong class="text-sm text-gray-600">Pièces justificatives:</strong>
                                                 <ul class="mt-1 text-sm text-gray-900">
                                                     @foreach($selectedReport->documents as $document)
-                                                        <li class="flex items-center space-x-2">
-                                                            <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"></path>
-                                                            </svg>
-                                                            <span>{{ $document->original_name }}</span>
+                                                        <li class="flex items-center justify-between space-x-2 py-1">
+                                                            <div class="flex items-center space-x-2">
+                                                                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"></path>
+                                                                </svg>
+                                                                <span>{{ $document->original_name }}</span>
+                                                                <span class="text-xs text-gray-500">({{ number_format($document->size / 1024, 1) }} KB)</span>
+                                                            </div>
+                                                            <a href="{{ route('download.document', $document) }}"
+                                                               class="text-indigo-600 hover:text-indigo-900 text-xs font-medium">
+                                                                Télécharger
+                                                            </a>
                                                         </li>
                                                     @endforeach
                                                 </ul>

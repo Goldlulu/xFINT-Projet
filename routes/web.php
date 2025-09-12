@@ -6,7 +6,9 @@ use App\Livewire\ExpenseReports\MyExpenseReports;
 use App\Livewire\Users\CreateUser;
 use App\Livewire\Users\UserProfile;
 use App\Livewire\Auth\ChangePassword;
+use App\Models\ExpenseDocument;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -38,6 +40,25 @@ Route::middleware([
     Route::get('/my-expense-reports', MyExpenseReports::class)->name('my-expense-reports');
     Route::get('/create-expense-report', CreateExpenseReport::class)->name('create-expense-report');
     Route::get('/user-profile', UserProfile::class)->name('user-profile');
+
+    // Route pour télécharger les documents
+    Route::get('/download-document/{document}', function(ExpenseDocument $document) {
+        $expenseReport = $document->expenseReport;
+
+        if ($expenseReport->user_id !== auth()->id() &&
+            !auth()->user()->hasRole(['manager', 'accounting'])) {
+            abort(403, 'Non autorisé');
+        }
+
+        // Vérifier si le fichier existe dans le storage
+        if (!Storage::exists($document->filename)) {
+            abort(404, 'Fichier non trouvé');
+        }
+
+        return Storage::download($document->filename, $document->original_name, [
+            'Content-Type' => $document->mime_type ?? 'application/octet-stream'
+        ]);
+    })->name('download.document');
 
     // Routes Manager/Comptabilité
     Route::middleware('role:manager|accounting')->group(function () {
