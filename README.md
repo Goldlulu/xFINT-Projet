@@ -26,8 +26,8 @@ Application interne de gestion des notes de frais développée avec Laravel, Liv
 ### Étapes
 ```bash
 # Cloner le projet
-git clone [url-du-projet]
-cd gestion-notes-frais
+git clone https://github.com/Goldlulu/xFINT-Projet.git
+cd xFINT-Projet
 
 # Lancer l'application
 docker-compose up
@@ -51,7 +51,7 @@ docker-compose up
 
 ```bash
 # Cloner et installer les dépendances
-git clone [[url-du-projet]](https://github.com/Goldlulu/xFINT-Projet.git)
+git clone https://github.com/Goldlulu/xFINT-Projet.git
 cd xFINT-Projet
 composer install
 npm install && npm run build
