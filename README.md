@@ -51,8 +51,8 @@ docker-compose up
 
 ```bash
 # Cloner et installer les dépendances
-git clone [url-du-projet]
-cd gestion-notes-frais
+git clone [[url-du-projet]](https://github.com/Goldlulu/xFINT-Projet.git)
+cd xFINT-Projet
 composer install
 npm install && npm run build
 
